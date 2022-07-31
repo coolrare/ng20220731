@@ -5,6 +5,7 @@ import { PostsRoutingModule } from './posts-routing.module';
 import { PostsComponent } from './posts.component';
 import { PostComponent } from './post/post.component';
 import { CreateComponent } from './create/create.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { CreateComponent } from './create/create.component';
   ],
   imports: [
     CommonModule,
-    PostsRoutingModule
+    PostsRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class PostsModule { }

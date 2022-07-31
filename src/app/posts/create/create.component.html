@@ -2,12 +2,13 @@
   <div class="container page">
     <div class="row">
       <div class="col-md-10 col-md-offset-1 col-xs-12">
-        <form>
+        <form [formGroup]="form">
           <fieldset class="form-group">
             <input
               class="form-control form-control-lg"
               type="text"
               placeholder="Post Title"
+              formControlName="title"
             />
           </fieldset>
           <fieldset class="form-group">
@@ -15,6 +16,7 @@
               class="form-control"
               rows="3"
               placeholder="Description"
+              formControlName="description"
             ></textarea>
           </fieldset>
           <fieldset class="form-group">
@@ -22,25 +24,22 @@
               class="form-control"
               rows="8"
               placeholder="Post body"
+              [formControl]="form.controls.body"
             ></textarea>
+            <!-- [formControl]="form.get('body')" -->
           </fieldset>
           <fieldset class="form-group">
-            <input class="form-control" type="text" placeholder="Enter tags" />
+            <input class="form-control" type="text" placeholder="Enter tags" (keyup.enter)="addTag($any($event.target).value); " />
             <div class="tag-list">
-              <span class="label label-pill label-default">
-                <i class="ion-close-round"></i> programming</span
-              >
-              <span class="label label-pill label-default">
-                <i class="ion-close-round"></i> javascript</span
-              >
-              <span class="label label-pill label-default">
-                <i class="ion-close-round"></i> webdev</span
+              <span class="label label-pill label-default" *ngFor="let tagControl of form.controls.tags.controls; let index = index">
+                <i class="ion-close-round" (click)="removeTag(index)"></i> {{ tagControl.value }}</span
               >
             </div>
           </fieldset>
           <button type="submit" class="btn btn-lg btn-primary pull-xs-right">
             Create Post
           </button>
+          {{ form.value | json }}
         </form>
       </div>
     </div>
