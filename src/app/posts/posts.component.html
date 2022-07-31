@@ -1,9 +1,11 @@
-<div class="home-page">
+<button (click)="displayArticles = !displayArticles">Toggle Articles</button>
+<div class="home-page" *ngIf="displayArticles">
 
   <div class="banner">
     <div class="container">
       <h1 class="logo-font">conduit</h1>
       <p>A place to share your knowledge.</p>
+      <button (click)="refresh()">Refresh</button>
     </div>
   </div>
 
@@ -22,7 +24,7 @@
           </ul>
         </div>
 
-        <div class="post-preview" *ngFor="let article of articles">
+        <div class="post-preview" *ngFor="let article of articles$ | async">
           <div class="post-meta">
             <a href="profile.html">
               <img src="http://i.imgur.com/Qr71crq.jpg" />

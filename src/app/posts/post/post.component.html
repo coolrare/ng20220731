@@ -1,4 +1,4 @@
-<div class="post-page">
+<div class="post-page" *ngIf="article$ | async as article">
 
   <div class="banner">
     <div class="container">
@@ -116,3 +116,4 @@
   </div>
 
 </div>
+<a routerLink="/post/2">Post (2)</a>
