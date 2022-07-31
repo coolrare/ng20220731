@@ -1,7 +1,7 @@
 import { LoginService } from './../login.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,9 +14,18 @@ export class LoginComponent implements OnInit {
     password: '',
   };
 
-  constructor(private loginService: LoginService, private router: Router) {}
+  redirect = '/';
 
-  ngOnInit(): void {}
+  constructor(
+    private loginService: LoginService,
+    private route: ActivatedRoute,
+    private router: Router) {}
+
+  ngOnInit(): void {
+    this.route.queryParamMap.subscribe(queryParamMap => {
+      this.redirect = queryParamMap.get('redirect') || '/';
+    })
+  }
 
   login() {
 
@@ -25,7 +34,7 @@ export class LoginComponent implements OnInit {
         console.log(result);
         localStorage.setItem('token', result.user.token);
         // this.router.navigate(['/']);
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl(this.redirect);
       },
       error: (error: HttpErrorResponse) => {
         alert(error.error.body);
