@@ -11,6 +11,11 @@
               formControlName="title"
             />
           </fieldset>
+
+          <div *ngIf="form.controls.title.invalid && form.controls.title.errors">
+            <div *ngIf="form.controls.title.errors['required']">請輸入標題 </div>
+          </div>
+
           <fieldset class="form-group">
             <textarea
               class="form-control"
@@ -28,6 +33,10 @@
             ></textarea>
             <!-- [formControl]="form.get('body')" -->
           </fieldset>
+          <div *ngIf="form.controls.body.invalid && form.controls.body.errors">
+            <div *ngIf="form.controls.body.errors['required']">請輸入內容</div>
+            <div *ngIf="form.controls.body.errors['minlength']">內容長度不合</div>
+          </div>
           <fieldset class="form-group">
             <input class="form-control" type="text" placeholder="Enter tags" (keyup.enter)="addTag($any($event.target).value); " />
             <div class="tag-list">
@@ -36,7 +45,7 @@
               >
             </div>
           </fieldset>
-          <button type="submit" class="btn btn-lg btn-primary pull-xs-right">
+          <button type="submit" class="btn btn-lg btn-primary pull-xs-right" [disabled]="form.invalid">
             Create Post
           </button>
           {{ form.value | json }}
