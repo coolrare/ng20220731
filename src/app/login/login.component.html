@@ -5,18 +5,33 @@
       <div class="col-md-6 col-md-offset-3 col-xs-12">
         <h1 class="text-xs-center">Sign in</h1>
 
-        <form (ngSubmit)="login()">
+        <form (ngSubmit)="login()" #tForm="ngForm">
           <fieldset class="form-group">
             <input name="email" class="form-control form-control-lg" type="text" placeholder="Email"
+              required
+              email
               [(ngModel)]="user.email"
+              #tEmail="ngModel"
             >
           </fieldset>
+          <div *ngIf="tEmail.dirty && tEmail.invalid">
+            {{ tEmail.errors | json }}
+            <div *ngIf="tEmail.errors?.['required']">請填寫 Email</div>
+            <div *ngIf="tEmail.errors?.['email']">Email 格式不正確</div>
+          </div>
           <fieldset class="form-group">
             <input name="password" class="form-control form-control-lg" type="password" placeholder="Password"
+              required
+              minlength="4"
               [(ngModel)]="user.password"
+              #tPassword="ngModel"
             >
           </fieldset>
-          <button class="btn btn-lg btn-primary pull-xs-right">
+          <div *ngIf="tPassword.dirty && tPassword.invalid">
+            <div *ngIf="tPassword.errors?.['required']">請填寫密碼</div>
+            <div *ngIf="tPassword.errors?.['minlength']">密碼長度不足</div>
+          </div>
+          <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="tForm.invalid">
             Sign in
           </button>
         </form>
