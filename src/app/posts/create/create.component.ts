@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { PostService } from './../../post.service';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 
@@ -21,7 +23,7 @@ export class CreateComponent implements OnInit {
     ])
   });
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private postService: PostService, private router: Router) { }
 
   ngOnInit(): void {
     // this.form.controls.
@@ -44,6 +46,18 @@ export class CreateComponent implements OnInit {
 
   removeTag(index: number){
     this.form.controls.tags.removeAt(index);
+  }
+
+  createPost() {
+    const data = {
+      title: this.form.value.title || '',
+      body: this.form.value.body || '',
+      description: this.form.value.description || '',
+      tagList: [...this.form.value.tags || []] as string[]
+    };
+    this.postService.createArticle(data).subscribe(() => {
+      this.router.navigateByUrl('/');
+    });
   }
 
 }

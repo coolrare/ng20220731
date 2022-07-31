@@ -2,7 +2,7 @@
   <div class="container page">
     <div class="row">
       <div class="col-md-10 col-md-offset-1 col-xs-12">
-        <form [formGroup]="form">
+        <form [formGroup]="form" (ngSubmit)="createPost()">
           <fieldset class="form-group">
             <input
               class="form-control form-control-lg"
